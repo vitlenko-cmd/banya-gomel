@@ -363,6 +363,10 @@
           <i class="fas fa-times text-xl"></i>
         </button>
       </div>
+      <!-- Логотип сверху формы -->
+      <div class="mb-4 text-center">
+        <img src="https://placehold.co/150x50/amber/orange?text=Логотип" alt="Логотип мастера" class="mx-auto rounded-lg">
+      </div>
       <form action="https://formsubmit.co/5922999@mail.ru" method="POST">
         <input type="hidden" name="_subject" id="form-subject" value="Новая заявка на отделку бани - Гомель">
         <input type="hidden" name="_captcha" value="false">
@@ -371,7 +375,9 @@
           <input type="text" name="name" placeholder="Ваше имя" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500">
         </div>
         <div class="mb-4">
-          <input type="tel" name="phone" placeholder="Телефон" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500">
+          <input type="tel" name="phone" placeholder="+375 (XX) XXX-XX-XX" required 
+                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                 oninput="formatPhone(this)">
         </div>
         <div class="mb-4">
           <textarea name="message" placeholder="Дополнительные пожелания" rows="3" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
@@ -405,6 +411,24 @@
     document.getElementById('modal').addEventListener('click', function(e) {
       if (e.target === this) closeModal();
     });
+
+    // Функция для маски телефона +375 (XX) XXX-XX-XX
+    function formatPhone(input) {
+      let value = input.value.replace(/\D/g, '');
+      if (value.length > 0) {
+        value = '+375 (' + value.slice(0, 2);
+        if (value.length > 7) {
+          value += ') ' + value.slice(7, 10);
+        }
+        if (value.length > 11) {
+          value += '-' + value.slice(11, 13);
+        }
+        if (value.length > 13) {
+          value += '-' + value.slice(13, 15);
+        }
+      }
+      input.value = value;
+    }
   </script>
 
 </body>
