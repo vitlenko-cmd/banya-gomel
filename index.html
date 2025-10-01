@@ -1,1 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Мастер по отделке бань и саун в Гомеле</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; }
+    .modal-overlay.show { display: flex; align-items: center; justify-content: center; }
+    .modal-content { background: white; border-radius: 1rem; padding: 1.5rem; width: 90%; max-width: 400px; }
+  </style>
+</head>
+<body>
 
+  <!-- Header -->
+  <header class="bg-white shadow-lg sticky top-0 z-40">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="text-center md:text-left mb-4 md:mb-0">
+          <h1 class="text-2xl md:text-3xl font-bold text-amber-800">Мастер по отделке бань и саун</h1>
+          <p class="text-gray-600">Гомель - качество проверенное временем</p>
+        </div>
+        <button onclick="openModal('Заказать звонок')" 
+                class="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold py-2 px-6 rounded-lg">
+          Заказать звонок
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-r from-amber-600 to-orange-600 text-white py-24">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">Профессиональная отделка бань и саун в Гомеле</h2>
+      <p class="text-xl mb-8 max-w-2xl mx-auto">
+        Превращаем готовые бани и сауны в уютные и функциональные пространства
+      </p>
+    </div>
+  </section>
+
+  <!-- Modal Form -->
+  <div id="modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-4">
+        <h3 id="modal-title" class="text-xl font-bold">Оставить заявку</h3>
+        <button onclick="closeModal()" class="text-gray-500">&times;</button>
+      </div>
+      <form action="https://formsubmit.co/5922999@mail.ru" method="POST">
+        <input type="hidden" name="_subject" id="form-subject" value="Заявка с сайта">
+        <input type="hidden" name="_captcha" value="false">
+        
+        <div class="mb-3">
+          <input type="text" name="name" placeholder="Ваше имя" required class="w-full px-3 py-2 border rounded">
+        </div>
+        <div class="mb-3">
+          <input 
+            type="tel" 
+            id="phone"
+            name="phone"
+            value="+375 (__) ___-__-__"
+            required
+            class="w-full px-3 py-2 border rounded font-mono"
+          >
+        </div>
+        <button type="submit" class="w-full bg-amber-600 text-white py-2 rounded hover:bg-amber-700">
+          Отправить
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openModal(title) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('form-subject').value = title;
+      document.getElementById('modal').classList.add('show');
+    }
+    function closeModal() {
+      document.getElementById('modal').classList.remove('show');
+    }
+
+    // Маска телефона
+    document.getElementById('phone').addEventListener('focus', function() {
+      if (this.value === '+375 (__) ___-__-__') {
+        this.value = '+375 (';
+        this.setSelectionRange(6, 6);
+      }
+    });
+
+    document.getElementById('phone').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 9) value = value.slice(0, 9);
+      
+      let formatted = '+375 (';
+      if (value.length >= 2) formatted += value.slice(0, 2) + ') ';
+      else if (value.length === 1) formatted += value + '_) ';
+      else formatted += '__) ';
+      
+      if (value.length > 2) {
+        let rest = value.slice(2);
+        let part1 = (rest.slice(0, 3) + '___').substring(0, 3);
+        let part2 = (rest.slice(3, 5) + '__').substring(0, 2);
+        let part3 = (rest.slice(5, 7) + '__').substring(0, 2);
+        formatted += part1 + '-' + part2 + '-' + part3;
+      } else {
+        formatted += '___-__-__';
+      }
+      
+      e.target.value = formatted;
+      
+      // Установка курсора
+      const pos = Math.min(6 + value.length + Math.floor((value.length - 1) / 3), 18);
+      setTimeout(() => e.target.setSelectionRange(pos, pos), 0);
+    });
+
+    // При отправке — чистый номер
+    document.querySelector('form').addEventListener('submit', function() {
+      const phone = document.getElementById('phone');
+      const clean = phone.value.replace(/\D/g, '');
+      phone.value = '+375' + clean;
+    });
+  </script>
+
+</body>
+</html>
