@@ -1,1 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Мастер по отделке бань и саун в Гомеле</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              800: '#92400e',
+              900: '#78350f',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
 
+    .hero-bg {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(219, 119, 6, 0.7), rgba(239, 68, 68, 0.7));
+      z-index: -1;
+    }
+
+    .parallax-section {
+      position: relative;
+      overflow: hidden;
+      padding: 4rem 0;
+    }
+    .parallax-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      transform: translateZ(-1px) scale(2);
+    }
+    .parallax-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 248, 240, 0.85), rgba(255, 240, 220, 0.85));
+      z-index: -1;
+    }
+
+    .modal-overlay {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      transform: translateY(20px);
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+    .modal-overlay.show .modal-content {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white">
+
+  <!-- Header -->
+  <header class="bg-white shadow-lg sticky top-0 z-40">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="text-center md:text-left mb-4 md:mb-0">
+          <h1 class="text-2xl md:text-3xl font-bold text-amber-800">Мастер по отделке бань и саун</h1>
+          <p class="text-gray-600">Гомель - качество проверенное временем</p>
+        </div>
+        <!-- Кнопка "Заказать звонок" вместо контактов -->
+        <button onclick="openModal('Заказать звонок')" 
+                class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-6 rounded-lg transition-all shadow-md">
+          Заказать звонок
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-bg">
+    <div class="parallax-bg bg-gradient-to-br from-amber-600 to-orange-600"></div>
+    <div class="hero-overlay"></div>
+    <div class="container mx-auto px-4 h-full flex flex-col justify-center items-center text-center text-white">
+      <h2 class="text-4xl md:text-6xl font-bold mb-6 max-w-4xl">Профессиональная отделка бань и саун в Гомеле</h2>
+      <p class="text-xl md:text-2xl mb-8 max-w-3xl">
+        Превращаем готовые бани и сауны в уютные и функциональные пространства для отдыха и оздоровления
+      </p>
+      <button onclick="openModal('Общая заявка на отделку')" 
+              class="bg-white text-amber-700 hover:bg-amber-50 font-bold py-3 px-8 rounded-lg text-lg transition-colors shadow-lg z-10">
+        Оставить заявку
+      </button>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="parallax-section">
+    <div class="parallax-bg bg-gradient-to-br from-amber-50 to-orange-50"></div>
+    <div class="parallax-overlay"></div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="text-center mb-12">
+        <h3 class="text-3xl md:text-4xl font-bold text-amber-800 mb-4">Услуги по отделке</h3>
+        <p class="text-gray-700 text-lg max-w-2xl mx-auto">
+          Специализируемся исключительно на внутренней отделке уже построенных бань и саун
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md border border-amber-200">
+          <i class="fas fa-shower text-amber-600 text-3xl mb-4"></i>
+          <h4 class="text-xl font-bold text-amber-800 mb-3">Отделка парных</h4>
+          <p class="text-gray-700 mb-4">Профессиональная обшивка парных комнат из натурального дерева</p>
+          <button onclick="openModal('Заявка на отделку парной')" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+            Отправить заявку
+          </button>
+        </div>
+        <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md border border-orange-200">
+          <i class="fas fa-couch text-orange-600 text-3xl mb-4"></i>
+          <h4 class="text-xl font-bold text-orange-800 mb-3">Отделка предбанников</h4>
+          <p class="text-gray-700 mb-4">Уютное пространство для отдыха и переодевания</p>
+          <button onclick="openModal('Заявка на отделку предбанника')" class="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+            Отправить заявку
+          </button>
+        </div>
+        <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md border border-red-200">
+          <i class="fas fa-paint-brush text-red-600 text-3xl mb-4"></i>
+          <h4 class="text-xl font-bold text-red-800 mb-3">Декоративная отделка</h4>
+          <p class="text-gray-700 mb-4">Художественная отделка потолков и стен из дерева</p>
+          <button onclick="openModal('Заявка на декоративную отделку')" class="w-full bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-600 hover:to-amber-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+            Отправить заявку
+          </button>
+        </div>
+        <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md border border-amber-200">
+          <i class="fas fa-fire text-amber-600 text-3xl mb-4"></i>
+          <h4 class="text-xl font-bold text-amber-800 mb-3">Монтаж печей</h4>
+          <p class="text-gray-700 mb-4">Установка и облицовка дровяных и электрических печей</p>
+          <button onclick="openModal('Заявка на монтаж печи')" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+            Отправить заявку
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section class="parallax-section">
+    <div class="parallax-bg bg-gradient-to-br from-orange-50 to-red-50"></div>
+    <div class="parallax-overlay"></div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="text-center mb-12">
+        <h3 class="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow">Наши работы</h3>
+        <p class="text-amber-50 text-lg max-w-2xl mx-auto drop-shadow">
+          Реальные проекты по отделке бань и саун в Гомеле и области
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 9 карточек портфолио (заглушки) -->
+        <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-amber-100">
+          <div class="h-48 bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white font-bold">Парная 1</div>
+          <div class="p-4">
+            <p class="text-gray-800 mb-4">Парная из липы с печью Harvia.</p>
+            <button onclick="openModal('Заявка: Парная 1')" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+              Заказать такой же
+            </button>
+          </div>
+        </div>
+        <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-orange-100">
+          <div class="h-48 bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold">Сауна 1</div>
+          <div class="p-4">
+            <p class="text-gray-800 mb-4">Сауна на даче 2×2 м.</p>
+            <button onclick="openModal('Заявка: Сауна 1')" class="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+              Заказать такой же
+            </button>
+          </div>
+        </div>
+        <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-red-100">
+          <div class="h-48 bg-gradient-to-br from-red-500 to-amber-500 flex items-center justify-center text-white font-bold">Баня 1</div>
+          <div class="p-4">
+            <p class="text-gray-800 mb-4">Баня под ключ 4×6 м.</p>
+            <button onclick="openModal('Заявка: Баня 1')" class="w-full bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-600 hover:to-amber-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+              Заказать такой же
+            </button>
+          </div>
+        </div>
+        <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-amber-100">
+          <div class="h-48 bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white font-bold">Парная 2</div>
+          <div class="p-4">
+            <p class="text-gray-800 mb-4">Парная с деревянной мебелью.</p>
+            <button onclick="openModal('Заявка: Парная 2')" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+              Заказать такой же
+            </button>
+          </div>
+        </div>
+        <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-orange-100">
+          <div class="h-48 bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold">Сауна 2</div>
+          <div class="p-4">
+            <p class="text-gray-800 mb-4">Сауна с бассейном и подсветкой.</p>
+            <button onclick="openModal('Заявка: Сауна 2')" class="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+              Заказать такой же
+            </button>
+          </div>
+        </div>
+        <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-red-100">
+          <div class="h-48 bg-gradient-to-br from-red-500 to-amber-500 flex items-center justify-center text-white font-bold">Баня 2</div>
+          <div class="p-4">
+            <p class="text-gray-800 mb-4">Баня с комнатой отдыха и барной стойкой.</p>
+            <button onclick="openModal('Заявка: Баня 2')" class="w-full bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-600 hover:to-amber-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+              Заказать такой же
+            </button>
+          </div>
+        </div>
+        <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-amber-100">
+          <div class="h-48 bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white font-bold">Парная 3</div>
+          <div class="p-4">
+            <p class="text-gray-800 mb-4">Элитная парная с ароматерапией.</p>
+            <button onclick="openModal('Заявка: Парная 3')" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+              Заказать такой же
+            </button>
+          </div>
+        </div>
+        <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-orange-100">
+          <div class="h-48 bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold">Сауна 3</div>
+          <div class="p-4">
+            <p class="text-gray-800 mb-4">Сауна в стиле лофт с хромированными элементами.</p>
+            <button onclick="openModal('Заявка: Сауна 3')" class="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+              Заказать такой же
+            </button>
+          </div>
+        </div>
+        <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-red-100">
+          <div class="h-48 bg-gradient-to-br from-red-500 to-amber-500 flex items-center justify-center text-white font-bold">Баня 3</div>
+          <div class="p-4">
+            <p class="text-gray-800 mb-4">Баня с панорамными окнами и террасой.</p>
+            <button onclick="openModal('Заявка: Баня 3')" class="w-full bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-600 hover:to-amber-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+              Заказать такой же
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Advantages -->
+  <section class="parallax-section">
+    <div class="parallax-bg bg-gradient-to-br from-amber-50 to-orange-50"></div>
+    <div class="parallax-overlay"></div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="text-center mb-12">
+        <h3 class="text-3xl md:text-4xl font-bold text-amber-800 mb-4">Почему выбирают нас?</h3>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div class="flex items-start space-x-3 bg-white/80 backdrop-blur-sm p-4 rounded-lg border border-amber-200">
+          <i class="fas fa-check-circle text-amber-600 mt-1"></i>
+          <span class="text-gray-800">Более 10 лет опыта</span>
+        </div>
+        <div class="flex items-start space-x-3 bg-white/80 backdrop-blur-sm p-4 rounded-lg border border-orange-200">
+          <i class="fas fa-check-circle text-orange-600 mt-1"></i>
+          <span class="text-gray-800">Натуральное дерево высокого качества</span>
+        </div>
+        <div class="flex items-start space-x-3 bg-white/80 backdrop-blur-sm p-4 rounded-lg border border-red-200">
+          <i class="fas fa-check-circle text-red-600 mt-1"></i>
+          <span class="text-gray-800">Гарантия до 3 лет</span>
+        </div>
+        <div class="flex items-start space-x-3 bg-white/80 backdrop-blur-sm p-4 rounded-lg border border-amber-200">
+          <i class="fas fa-check-circle text-amber-600 mt-1"></i>
+          <span class="text-gray-800">Бесплатный выезд на замер</span>
+        </div>
+        <div class="flex items-start space-x-3 bg-white/80 backdrop-blur-sm p-4 rounded-lg border border-orange-200">
+          <i class="fas fa-check-circle text-orange-600 mt-1"></i>
+          <span class="text-gray-800">Работаем по всему Гомельскому району</span>
+        </div>
+        <div class="flex items-start space-x-3 bg-white/80 backdrop-blur-sm p-4 rounded-lg border border-red-200">
+          <i class="fas fa-check-circle text-red-600 mt-1"></i>
+          <span class="text-gray-800">Фиксированные цены без скрытых платежей</span>
+        </div>
+      </div>
+      <div class="text-center mt-8">
+        <button onclick="openModal('Заявка на консультацию')" 
+                class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all shadow-lg">
+          Получить консультацию
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal Form -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 modal-overlay">
+    <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4 modal-content">
+      <div class="flex justify-between items-center mb-4">
+        <h3 id="modal-title" class="text-xl font-bold text-gray-800">Оставить заявку</h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      <div class="mb-4 text-center">
+        <img src="https://placehold.co/150x50/amber/orange?text=Логотип" alt="Логотип" class="mx-auto rounded-lg">
+      </div>
+      <form action="https://formsubmit.co/5922999@mail.ru" method="POST">
+        <input type="hidden" name="_subject" id="form-subject" value="Новая заявка на отделку бани - Гомель">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://formsubmit.co/thanks">
+        <div class="mb-4">
+          <input type="text" name="name" placeholder="Ваше имя" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500">
+        </div>
+        <div class="mb-4">
+          <input type="tel" name="phone" placeholder="+375 (XX) XXX-XX-XX" required 
+                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                 onfocus="this.placeholder = ''"
+                 onblur="if(this.value === '') this.placeholder = '+375 (XX) XXX-XX-XX'">
+        </div>
+        <div class="mb-4">
+          <textarea name="message" placeholder="Дополнительные пожелания" rows="3" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 px-4 rounded-lg transition-all">
+          Отправить заявку
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+      <p class="mb-2">© 2024 Мастер по отделке бань и саун в Гомеле</p>
+      <p class="text-gray-400 text-sm">Индивидуальный предприниматель | Все права защищены</p>
+    </div>
+  </footer>
+
+  <script>
+    function openModal(title) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('form-subject').value = title;
+      document.getElementById('modal').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('modal').classList.remove('show');
+      document.body.style.overflow = 'auto';
+    }
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // Маска телефона
+    document.addEventListener('DOMContentLoaded', function() {
+      const phoneInput = document.querySelector('input[name="phone"]');
+      if (!phoneInput) return;
+
+      phoneInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 12) value = value.slice(0, 12);
+        let formatted = '';
+        if (value.length > 0) formatted = '+375';
+        if (value.length > 3) formatted += ' (' + value.slice(3, 5);
+        if (value.length >= 5) formatted += ') ' + value.slice(5, 8);
+        if (value.length >= 8) formatted += '-' + value.slice(8, 10);
+        if (value.length >= 10) formatted += '-' + value.slice(10, 12);
+        e.target.value = formatted;
+      });
+
+      phoneInput.addEventListener('keydown', function(e) {
+        if (['Backspace', 'Delete', 'Tab', 'Escape', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+        if (!/^\d$/.test(e.key)) e.preventDefault();
+      });
+    });
+  </script>
+
+</body>
+</html>
