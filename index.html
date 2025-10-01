@@ -1,1 +1,333 @@
+import React, { useState, useEffect } from 'react';
+import { X } from 'lucide-react';
 
+const App = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [phone, setPhone] = useState('');
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState({});
+
+  const openModal = (title) => {
+    setModalTitle(title);
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden';
+    setErrors({});
+    setName('');
+    setPhone('');
+    setMessage('');
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = 'auto';
+    setErrors({});
+  };
+
+  const formatPhone = (value) => {
+    const digits = value.replace(/\D/g, '');
+    if (digits.length === 0) return '';
+    if (digits.length <= 3) return `+375`;
+    if (digits.length <= 5) return `+375 (${digits.slice(3)}`;
+    if (digits.length <= 8) return `+375 (${digits.slice(3, 5)}) ${digits.slice(5)}`;
+    if (digits.length <= 10) return `+375 (${digits.slice(3, 5)}) ${digits.slice(5, 8)}-${digits.slice(8)}`;
+    return `+375 (${digits.slice(3, 5)}) ${digits.slice(5, 8)}-${digits.slice(8, 10)}-${digits.slice(10, 12)}`;
+  };
+
+  const handlePhoneChange = (e) => {
+    const formatted = formatPhone(e.target.value);
+    setPhone(formatted);
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!name.trim()) {
+      newErrors.name = 'Обязательное поле';
+    }
+    if (!phone || phone.length < 18) {
+      newErrors.phone = 'Обязательное поле';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      return true;
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="bg-white shadow-lg sticky top-0 z-40">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="text-center md:text-left mb-4 md:mb-0">
+              <h1 className="text-2xl md:text-3xl font-bold text-amber-800">Мастер по отделке бань и саун</h1>
+              <p className="text-gray-600">Гомель - качество проверенное временем</p>
+            </div>
+            <button 
+              onClick={() => openModal('Заказать звонок')}
+              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-6 rounded-lg transition-all shadow-md"
+            >
+              Заказать звонок
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="relative w-full h-screen overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-amber-600 to-orange-600"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-amber-600/70 to-red-500/70"></div>
+        <div className="container mx-auto px-4 h-full flex flex-col justify-center items-center text-center text-white relative z-10">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 max-w-4xl">Профессиональная отделка бань и саун в Гомеле</h2>
+          <p className="text-xl md:text-2xl mb-8 max-w-3xl">
+            Превращаем готовые бани и сауны в уютные и функциональные пространства для отдыха и оздоровления
+          </p>
+          <button 
+            onClick={() => openModal('Общая заявка на отделку')}
+            className="bg-white text-amber-700 hover:bg-amber-50 font-bold py-3 px-8 rounded-lg text-lg transition-colors shadow-lg"
+          >
+            Оставить заявку
+          </button>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section className="relative py-16 overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-amber-50 to-orange-50"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-amber-50/85 to-orange-50/85"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold text-amber-800 mb-4">Услуги по отделке</h3>
+            <p className="text-gray-700 text-lg max-w-2xl mx-auto">
+              Специализируемся исключительно на внутренней отделке уже построенных бань и саун
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md border border-amber-200">
+              <i className="fas fa-shower text-amber-600 text-3xl mb-4"></i>
+              <h4 className="text-xl font-bold text-amber-800 mb-3">Отделка парных</h4>
+              <p className="text-gray-700 mb-4">Профессиональная обшивка парных комнат из натурального дерева</p>
+              <button 
+                onClick={() => openModal('Заявка на отделку парной')}
+                className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all"
+              >
+                Отправить заявку
+              </button>
+            </div>
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md border border-orange-200">
+              <i className="fas fa-couch text-orange-600 text-3xl mb-4"></i>
+              <h4 className="text-xl font-bold text-orange-800 mb-3">Отделка предбанников</h4>
+              <p className="text-gray-700 mb-4">Уютное пространство для отдыха и переодевания</p>
+              <button 
+                onClick={() => openModal('Заявка на отделку предбанника')}
+                className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-2 px-4 rounded-lg transition-all"
+              >
+                Отправить заявку
+              </button>
+            </div>
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md border border-red-200">
+              <i className="fas fa-paint-brush text-red-600 text-3xl mb-4"></i>
+              <h4 className="text-xl font-bold text-red-800 mb-3">Декоративная отделка</h4>
+              <p className="text-gray-700 mb-4">Художественная отделка потолков и стен из дерева</p>
+              <button 
+                onClick={() => openModal('Заявка на декоративную отделку')}
+                className="w-full bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-600 hover:to-amber-600 text-white font-bold py-2 px-4 rounded-lg transition-all"
+              >
+                Отправить заявку
+              </button>
+            </div>
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md border border-amber-200">
+              <i className="fas fa-fire text-amber-600 text-3xl mb-4"></i>
+              <h4 className="text-xl font-bold text-amber-800 mb-3">Монтаж печей</h4>
+              <p className="text-gray-700 mb-4">Установка и облицовка дровяных и электрических печей</p>
+              <button 
+                onClick={() => openModal('Заявка на монтаж печи')}
+                className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all"
+              >
+                Отправить заявку
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Portfolio */}
+      <section className="relative py-16 overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-orange-50 to-red-50"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-orange-50/85 to-red-50/85"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold text-amber-800 mb-4">Наши работы</h3>
+            <p className="text-gray-700 text-lg max-w-2xl mx-auto">
+              Реальные проекты по отделке бань и саун в Гомеле и области
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {[
+              { title: 'Парная 1', desc: 'Парная из липы с печью Harvia.', gradient: 'from-amber-500 to-orange-500' },
+              { title: 'Сауна 1', desc: 'Сауна на даче 2×2 м.', gradient: 'from-orange-500 to-red-500' },
+              { title: 'Баня 1', desc: 'Баня под ключ 4×6 м.', gradient: 'from-red-500 to-amber-500' },
+              { title: 'Парная 2', desc: 'Парная с деревянной мебелью.', gradient: 'from-amber-500 to-orange-500' },
+              { title: 'Сауна 2', desc: 'Сауна с бассейном и подсветкой.', gradient: 'from-orange-500 to-red-500' },
+              { title: 'Баня 2', desc: 'Баня с комнатой отдыха и барной стойкой.', gradient: 'from-red-500 to-amber-500' },
+              { title: 'Парная 3', desc: 'Элитная парная с ароматерапией.', gradient: 'from-amber-500 to-orange-500' },
+              { title: 'Сауна 3', desc: 'Сауна в стиле лофт с хромированными элементами.', gradient: 'from-orange-500 to-red-500' },
+              { title: 'Баня 3', desc: 'Баня с панорамными окнами и террасой.', gradient: 'from-red-500 to-amber-500' }
+            ].map((item, index) => (
+              <div key={index} className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-amber-100">
+                <div className={`h-48 bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white font-bold`}>
+                  {item.title}
+                </div>
+                <div className="p-4">
+                  <p className="text-gray-800 mb-4">{item.desc}</p>
+                  <button 
+                    onClick={() => openModal(`Заявка: ${item.title}`)}
+                    className={`w-full bg-gradient-to-r ${item.gradient} hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all`}
+                  >
+                    Заказать такой же
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Advantages */}
+      <section className="relative py-16 overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-amber-50 to-orange-50"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-amber-50/85 to-orange-50/85"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold text-amber-800 mb-4">Почему выбирают нас?</h3>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {[
+              'Более 10 лет опыта',
+              'Натуральное дерево высокого качества',
+              'Гарантия до 3 лет',
+              'Бесплатный выезд на замер',
+              'Работаем по всему Гомельскому району',
+              'Фиксированные цены без скрытых платежей'
+            ].map((advantage, index) => (
+              <div key={index} className="flex items-start space-x-3 bg-white/80 backdrop-blur-sm p-4 rounded-lg border border-green-200">
+                <i className="fas fa-check-circle text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600 text-2xl mt-1"></i>
+                <span className="text-gray-800 text-lg">{advantage}</span>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <button 
+              onClick={() => openModal('Заявка на консультацию')}
+              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all shadow-lg"
+            >
+              Получить консультацию
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Modal Form */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300"
+          onClick={closeModal}
+        >
+          <div 
+            className="bg-white rounded-xl p-6 w-full max-w-md mx-4 transform transition-all duration-400"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-gray-800">{modalTitle}</h3>
+              <button 
+                onClick={closeModal}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X className="text-xl" />
+              </button>
+            </div>
+            <div className="mb-4 text-center">
+              <div className="mx-auto rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 w-32 h-12 flex items-center justify-center">
+                <span className="text-white font-bold text-sm">Логотип</span>
+              </div>
+            </div>
+            <form 
+              action="https://formsubmit.co/5922999@mail.ru" 
+              method="POST"
+              onSubmit={handleSubmit}
+              className="space-y-4"
+            >
+              <input type="hidden" name="_subject" value={modalTitle} />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value="https://yourdomain.co/thanks.html" />
+              
+              <div>
+                <input 
+                  type="text" 
+                  name="name" 
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Ваше имя" 
+                  required 
+                  className={`w-full px-4 py-3 rounded-lg border ${errors.name ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-amber-500`}
+                />
+                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+              </div>
+              <div>
+                <input 
+                  type="tel" 
+                  name="phone" 
+                  value={phone}
+                  onChange={handlePhoneChange}
+                  placeholder="+375 (XX) XXX-XX-XX"
+                  required 
+                  className={`w-full px-4 py-3 rounded-lg border ${errors.phone ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-amber-500`}
+                />
+                {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+              </div>
+              <div>
+                <textarea 
+                  name="message" 
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Дополнительные пожелания" 
+                  rows="3" 
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                ></textarea>
+              </div>
+              <button 
+                type="submit" 
+                className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 px-4 rounded-lg transition-all"
+              >
+                Отправить заявку
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white py-8">
+        <div className="container mx-auto px-4 text-center">
+          <p className="mb-2">© 2024 Мастер по отделке бань и саун в Гомеле</p>
+          <p className="text-gray-400 text-sm">Индивидуальный предприниматель | Все права защищены</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default App;
