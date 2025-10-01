@@ -22,6 +22,32 @@
               700: '#b45309',
               800: '#92400e',
               900: '#78350f',
+            },
+            primary: {
+              50: '#fff8f0',
+              100: '#ffe9cc',
+              200: '#ffd499',
+              300: '#ffb866',
+              400: '#ff9933',
+              500: '#ff7700',
+              600: '#e66a00',
+              700: '#cc5e00',
+              800: '#b35200',
+              900: '#994500',
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.3s ease-out',
+            'slide-up': 'slideUp 0.4s ease-out'
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' }
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' }
             }
           }
         }
@@ -31,12 +57,18 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
     body { font-family: 'Inter', sans-serif; }
+    .modal-overlay {
+      animation: fade-in 0.3s ease-out;
+    }
+    .modal-content {
+      animation: slide-up 0.4s ease-out;
+    }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50">
 
   <!-- Header -->
-  <header class="bg-white shadow-lg sticky top-0 z-50">
+  <header class="bg-white shadow-lg sticky top-0 z-40">
     <div class="container mx-auto px-4 py-4">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="text-center md:text-left mb-4 md:mb-0">
@@ -58,17 +90,21 @@
   </header>
 
   <!-- Hero -->
-  <section class="py-16 md:py-24 bg-gradient-to-r from-amber-600 to-orange-600 text-white">
+  <section class="py-16 md:py-24 bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 text-white">
     <div class="container mx-auto px-4 text-center">
       <h2 class="text-4xl md:text-6xl font-bold mb-6">Профессиональная отделка бань и саун в Гомеле</h2>
       <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
         Превращаем готовые бани и сауны в уютные и функциональные пространства для отдыха и оздоровления
       </p>
+      <button onclick="openModal('Общая заявка на отделку')" 
+              class="bg-white text-amber-700 hover:bg-amber-50 font-bold py-3 px-8 rounded-lg text-lg transition-colors shadow-lg">
+        Оставить заявку
+      </button>
     </div>
   </section>
 
   <!-- Services -->
-  <section class="py-16 bg-white">
+  <section class="py-16 bg-gradient-to-b from-white to-amber-50">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
         <h3 class="text-3xl md:text-4xl font-bold text-amber-800 mb-4">Услуги по отделке</h3>
@@ -76,126 +112,198 @@
           Специализируемся исключительно на внутренней отделке уже построенных бань и саун
         </p>
       </div>
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div class="bg-amber-50 p-6 rounded-xl shadow-md">
-          <i class="fas fa-shower text-amber-600 text-2xl mb-4"></i>
+      <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-xl shadow-md border border-amber-200">
+          <i class="fas fa-shower text-amber-600 text-3xl mb-4"></i>
           <h4 class="text-xl font-bold text-amber-800 mb-3">Отделка парных</h4>
-          <p class="text-gray-600">Профессиональная обшивка парных комнат из натурального дерева</p>
+          <p class="text-gray-600 mb-4">Профессиональная обшивка парных комнат из натурального дерева с учетом всех требований</p>
+          <button onclick="openModal('Заявка на отделку парной')" 
+                  class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+            Отправить заявку
+          </button>
         </div>
-        <div class="bg-amber-50 p-6 rounded-xl shadow-md">
-          <i class="fas fa-couch text-amber-600 text-2xl mb-4"></i>
-          <h4 class="text-xl font-bold text-amber-800 mb-3">Отделка предбанников</h4>
-          <p class="text-gray-600">Уютное пространство для отдыха и переодевания</p>
+        <div class="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-xl shadow-md border border-orange-200">
+          <i class="fas fa-couch text-orange-600 text-3xl mb-4"></i>
+          <h4 class="text-xl font-bold text-orange-800 mb-3">Отделка предбанников</h4>
+          <p class="text-gray-600 mb-4">Создание уютного и функционального пространства для отдыха и переодевания</p>
+          <button onclick="openModal('Заявка на отделку предбанника')" 
+                  class="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+            Отправить заявку
+          </button>
         </div>
-        <div class="bg-amber-50 p-6 rounded-xl shadow-md">
-          <i class="fas fa-paint-brush text-amber-600 text-2xl mb-4"></i>
-          <h4 class="text-xl font-bold text-amber-800 mb-3">Декоративная отделка</h4>
-          <p class="text-gray-600">Художественная отделка потолков и стен из дерева</p>
+        <div class="bg-gradient-to-br from-red-50 to-amber-50 p-6 rounded-xl shadow-md border border-red-200">
+          <i class="fas fa-paint-brush text-red-600 text-3xl mb-4"></i>
+          <h4 class="text-xl font-bold text-red-800 mb-3">Декоративная отделка</h4>
+          <p class="text-gray-600 mb-4">Художественная отделка потолков, стен и элементов интерьера из дерева</p>
+          <button onclick="openModal('Заявка на декоративную отделку')" 
+                  class="w-full bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-600 hover:to-amber-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+            Отправить заявку
+          </button>
         </div>
-        <div class="bg-amber-50 p-6 rounded-xl shadow-md">
-          <i class="fas fa-fire text-amber-600 text-2xl mb-4"></i>
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-xl shadow-md border border-amber-200">
+          <i class="fas fa-fire text-amber-600 text-3xl mb-4"></i>
           <h4 class="text-xl font-bold text-amber-800 mb-3">Монтаж печей</h4>
-          <p class="text-gray-600">Установка и облицовка дровяных и электрических печей</p>
+          <p class="text-gray-600 mb-4">Установка и облицовка дровяных и электрических печей для саун и бань</p>
+          <button onclick="openModal('Заявка на монтаж печи')" 
+                  class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+            Отправить заявку
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio with image placeholders -->
+  <section class="py-16 bg-gradient-to-b from-amber-50 to-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h3 class="text-3xl md:text-4xl font-bold text-amber-800 mb-4">Наши работы</h3>
+        <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+          Реальные проекты по отделке бань и саун в Гомеле и области
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Work 1 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-amber-100">
+          <div class="h-48 overflow-hidden">
+            <img src="https://placehold.co/600x400/amber/orange?text=Парная+из+липы" 
+                 alt="Парная в частном доме" 
+                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+          </div>
+          <div class="p-4">
+            <p class="text-gray-700 mb-4">Полная отделка парной из липы, установка печи Harvia.</p>
+            <button onclick="openModal('Заявка на похожий проект: парная в частном доме')" 
+                    class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+              Заказать такой же
+            </button>
+          </div>
+        </div>
+
+        <!-- Work 2 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-orange-100">
+          <div class="h-48 overflow-hidden">
+            <img src="https://placehold.co/600x400/orange/red?text=Сауна+на+даче" 
+                 alt="Сауна на даче" 
+                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+          </div>
+          <div class="p-4">
+            <p class="text-gray-700 mb-4">Компактная сауна 2x2 м с предбанником и бассейном.</p>
+            <button onclick="openModal('Заявка на похожий проект: сауна на даче')" 
+                    class="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+              Заказать такой же
+            </button>
+          </div>
+        </div>
+
+        <!-- Work 3 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-red-100">
+          <div class="h-48 overflow-hidden">
+            <img src="https://placehold.co/600x400/red/amber?text=Баня+под+ключ" 
+                 alt="Баня под ключ" 
+                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+          </div>
+          <div class="p-4">
+            <p class="text-gray-700 mb-4">Отделка бани 4x6 м: парная, душевая, комната отдыха.</p>
+            <button onclick="openModal('Заявка на похожий проект: баня под ключ')" 
+                    class="w-full bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-600 hover:to-amber-600 text-white font-bold py-2 px-4 rounded-lg transition-all">
+              Заказать такой же
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Advantages -->
-  <section class="py-16 bg-amber-50">
+  <section class="py-16 bg-gradient-to-b from-white to-amber-50">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
         <h3 class="text-3xl md:text-4xl font-bold text-amber-800 mb-4">Почему выбирают нас?</h3>
       </div>
-      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        <div class="flex items-start space-x-3">
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div class="flex items-start space-x-3 bg-gradient-to-r from-amber-50 to-orange-50 p-4 rounded-lg border border-amber-200">
           <i class="fas fa-check-circle text-amber-600 mt-1"></i>
-          <span class="text-gray-700 text-lg">Более 10 лет опыта в отделке бань и саун</span>
+          <span class="text-gray-700">Более 10 лет опыта в отделке бань и саун</span>
         </div>
-        <div class="flex items-start space-x-3">
+        <div class="flex items-start space-x-3 bg-gradient-to-r from-orange-50 to-red-50 p-4 rounded-lg border border-orange-200">
+          <i class="fas fa-check-circle text-orange-600 mt-1"></i>
+          <span class="text-gray-700">Используем только натуральное дерево высокого качества</span>
+        </div>
+        <div class="flex items-start space-x-3 bg-gradient-to-r from-red-50 to-amber-50 p-4 rounded-lg border border-red-200">
+          <i class="fas fa-check-circle text-red-600 mt-1"></i>
+          <span class="text-gray-700">Гарантия на все виды работ до 3 лет</span>
+        </div>
+        <div class="flex items-start space-x-3 bg-gradient-to-r from-amber-50 to-orange-50 p-4 rounded-lg border border-amber-200">
           <i class="fas fa-check-circle text-amber-600 mt-1"></i>
-          <span class="text-gray-700 text-lg">Используем только натуральное дерево высокого качества</span>
+          <span class="text-gray-700">Бесплатный выезд на замер и консультация</span>
         </div>
-        <div class="flex items-start space-x-3">
-          <i class="fas fa-check-circle text-amber-600 mt-1"></i>
-          <span class="text-gray-700 text-lg">Гарантия на все виды работ до 3 лет</span>
+        <div class="flex items-start space-x-3 bg-gradient-to-r from-orange-50 to-red-50 p-4 rounded-lg border border-orange-200">
+          <i class="fas fa-check-circle text-orange-600 mt-1"></i>
+          <span class="text-gray-700">Работаем по всему Гомельскому району</span>
         </div>
-        <div class="flex items-start space-x-3">
-          <i class="fas fa-check-circle text-amber-600 mt-1"></i>
-          <span class="text-gray-700 text-lg">Бесплатный выезд на замер и консультация</span>
+        <div class="flex items-start space-x-3 bg-gradient-to-r from-red-50 to-amber-50 p-4 rounded-lg border border-red-200">
+          <i class="fas fa-check-circle text-red-600 mt-1"></i>
+          <span class="text-gray-700">Фиксированные цены без скрытых платежей</span>
         </div>
-        <div class="flex items-start space-x-3">
-          <i class="fas fa-check-circle text-amber-600 mt-1"></i>
-          <span class="text-gray-700 text-lg">Работаем по всему Гомельскому району</span>
-        </div>
-        <div class="flex items-start space-x-3">
-          <i class="fas fa-check-circle text-amber-600 mt-1"></i>
-          <span class="text-gray-700 text-lg">Фиксированные цены без скрытых платежей</span>
-        </div>
+      </div>
+      <div class="text-center mt-8">
+        <button onclick="openModal('Заявка на консультацию')" 
+                class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all shadow-lg">
+          Получить консультацию
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- Contact Form -->
-  <section class="py-16 bg-gradient-to-r from-amber-600 to-orange-600 text-white">
-    <div class="container mx-auto px-4">
-      <div class="max-w-2xl mx-auto text-center mb-10">
-        <h3 class="text-3xl md:text-4xl font-bold mb-4">Оставьте заявку на отделку</h3>
-        <p class="text-xl">Мы свяжемся с вами в течение часа для уточнения деталей</p>
+  <!-- Modal Form -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden modal-overlay">
+    <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4 modal-content">
+      <div class="flex justify-between items-center mb-4">
+        <h3 id="modal-title" class="text-xl font-bold text-gray-800">Оставить заявку</h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
+          <i class="fas fa-times text-xl"></i>
+        </button>
       </div>
-      
-      <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 max-w-lg mx-auto">
-        <form action="https://formsubmit.co/5922999@mail.ru" method="POST" class="space-y-4">
+      <form action="https://formsubmit.co/5922999@mail.ru" method="POST">
+        <input type="hidden" name="_subject" id="form-subject" value="Новая заявка на отделку бани - Гомель">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://formsubmit.co/thanks">
+        
+        <div class="mb-4">
           <input 
             type="text" 
             name="name" 
             placeholder="Ваше имя" 
             required 
-            class="w-full px-4 py-3 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-300"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
+        </div>
+        <div class="mb-4">
           <input 
             type="tel" 
             name="phone" 
             placeholder="Телефон" 
             required 
-            class="w-full px-4 py-3 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-300"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
           />
+        </div>
+        <div class="mb-4">
           <textarea 
             name="message" 
-            placeholder="Опишите ваш проект (тип бани, объём работ и т.д.)" 
-            rows="4"
-            class="w-full px-4 py-3 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-300"
+            placeholder="Дополнительные пожелания" 
+            rows="3"
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
           ></textarea>
-          
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_next" value="https://formsubmit.co/thanks" />
-          <input type="hidden" name="_subject" value="Новая заявка на отделку бани - Гомель" />
-          
-          <button 
-            type="submit"
-            class="w-full bg-white text-amber-700 hover:bg-amber-50 font-bold py-3 px-6 rounded-lg text-lg transition-colors"
-          >
-            Отправить заявку
-          </button>
-        </form>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto">
-        <div class="flex flex-col items-center">
-          <i class="fas fa-phone text-2xl mb-2"></i>
-          <span class="font-bold">+375 (29) 123-45-67</span>
         </div>
-        <div class="flex flex-col items-center">
-          <i class="fas fa-envelope text-2xl mb-2"></i>
-          <span class="font-bold">5922999@mail.ru</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <i class="fas fa-map-marker-alt text-2xl mb-2"></i>
-          <span class="font-bold">Гомель, Беларусь</span>
-        </div>
-      </div>
+        <button 
+          type="submit"
+          class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 px-4 rounded-lg transition-all"
+        >
+          Отправить заявку
+        </button>
+      </form>
     </div>
-  </section>
+  </div>
 
   <!-- Footer -->
   <footer class="bg-gray-800 text-white py-8">
@@ -204,6 +312,26 @@
       <p class="text-gray-400 text-sm">Индивидуальный предприниматель | Все права защищены</p>
     </div>
   </footer>
+
+  <script>
+    function openModal(title) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('form-subject').value = title;
+      document.getElementById('modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+  </script>
 
 </body>
 </html>
