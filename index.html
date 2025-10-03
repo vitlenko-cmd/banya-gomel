@@ -121,7 +121,32 @@
     </div>
   </header>
 
-  <!-- Hero with Fullscreen Video -->
+  <!-- Hero with Local Video Background -->
+<section class="relative w-full h-screen overflow-hidden">
+  <video 
+    autoplay 
+    muted 
+    loop 
+    playsinline
+    class="absolute top-0 left-0 w-full h-full object-cover z-[-2]"
+  >
+    <source src="https://ваш-сайт.бел/background.mp4" type="video/mp4">
+    Ваш браузер не поддерживает видео.
+  </video>
+  <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-amber-900/80 to-red-900/80 z-[-1]"></div>
+  <div class="container mx-auto px-4 h-full flex flex-col justify-center items-center text-center text-white relative z-10">
+    <h2 class="text-4xl md:text-6xl font-bold mb-6 max-w-4xl">Профессиональная отделка бань и саун в Гомеле</h2>
+    <p class="text-xl md:text-2xl mb-8 max-w-3xl">
+      Превращаем готовые бани и сауны в уютные и функциональные пространства для отдыха и оздоровления
+    </p>
+    <button onclick="openModal('Общая заявка на отделку')" 
+            class="bg-white text-amber-700 hover:bg-amber-50 font-bold py-3 px-8 rounded-lg text-lg transition-colors shadow-lg">
+      Оставить заявку
+    </button>
+  </div>
+</section>
+  
+  <!-- Hero with Fullscreen Video OLD YOUTUBE
   <section class="relative w-full h-screen overflow-hidden">
     <iframe 
       class="hero-video"
@@ -141,7 +166,7 @@
         Оставить заявку
       </button>
     </div>
-  </section>
+  </section> -->
 
   <!-- Services -->
   <section class="parallax-section">
